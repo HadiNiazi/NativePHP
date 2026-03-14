@@ -1,11 +1,9 @@
-```{=html}
 <p align="center">
-```
-`<a href="https://www.youtube.com/watch?v=G9BM1q5Jl50&list=PLDc9bt_00KcJ6eZQODz-TrkuFA5sTmrg5&ab_channel=CareerDevelopmentLab" target="_blank">`{=html}
-Build Task Tracker App using Laravel & NativePHP `</a>`{=html}
-```{=html}
+<a href="https://www.youtube.com/watch?v=G9BM1q5Jl50&list=PLDc9bt_00KcJ6eZQODz-TrkuFA5sTmrg5&ab_channel=CareerDevelopmentLab" target="_blank">
+Build Task Tracker App using Laravel & NativePHP
+</a>
 </p>
-```
+
 ## Installation Steps
 
 Follow these steps to install and run the application.
