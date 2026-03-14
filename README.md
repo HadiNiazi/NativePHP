@@ -51,13 +51,13 @@ php artisan native:run
 
 ## Video Tutorial
 
-Watch the complete tutorial here:
+Watch the first video tutorial click below:
 
-https://www.youtube.com/watch?v=j_jgf7aOO7M&list=PL9TPlJ_mMj-QU1bSdNZUmupN2Mh2luxSc&index=2
+https://youtu.be/j_jgf7aOO7M?si=7R5oeiZeBuhAOZqt
 
 ------------------------------------------------------------------------
 
-## Learn More Laravel & Vue.js
+## Learn More Laravel 
 
 Visit my YouTube channels to learn more about Laravel and web
 development.
