@@ -49,6 +49,34 @@ php artisan native:run
 
 ------------------------------------------------------------------------
 
+###  App Bundling Performance increasing Steps
+
+``` bash
+php artisan optimize:clear          # Clean everything
+php artisan optimize                # This is the magic — caches routes, config, views, events
+```
+
+Then rebuild frontend assets (super important for first load):
+
+``` bash
+npm run build -- --mode=android     # or --mode=ios depending on your phone
+```
+
+Now start Jump:
+
+``` bash
+php artisan native:jump --skip-build   # skips unnecessary rebuild
+```
+
+Extra speed tricks if still slow:
+
+* Make sure your phone and computer are on the same fast Wi-Fi (no VPN, no 5G hotspot).
+* Add --host=0.0.0.0 if needed: php artisan native:jump --host=0.0.0.0
+* Your first route/screen should be as light as possible (no heavy DB queries, no big loops on boot).
+
+
+------------------------------------------------------------------------
+
 ## Video Tutorial
 
 Watch the first video tutorial click below:
