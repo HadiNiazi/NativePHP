@@ -41,7 +41,7 @@ Update your database credentials in the `.env` file and run:
 php artisan migrate
 ```
 
-### 6. Run the Desktop Application
+### 6. Run the Mobile Application
 
 ``` bash
 php artisan native:run
@@ -53,7 +53,7 @@ php artisan native:run
 
 Watch the complete tutorial here:
 
-https://www.youtube.com/watch?v=G9BM1q5Jl50
+https://www.youtube.com/watch?v=j_jgf7aOO7M&list=PL9TPlJ_mMj-QU1bSdNZUmupN2Mh2luxSc&index=2
 
 ------------------------------------------------------------------------
 
