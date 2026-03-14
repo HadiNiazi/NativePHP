@@ -1,59 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
+🖥️ Laravel NativePHP Task Tracker
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+</p> <p align="center"> A simple **Task Tracker Desktop Application** built with <b>Laravel</b> and <b>NativePHP</b>. </p> <p align="center"> <a href="https://www.youtube.com/watch?v=G9BM1q5Jl50&list=PLDc9bt_00KcJ6eZQODz-TrkuFA5sTmrg5&ab_channel=CareerDevelopmentLab" target="_blank"> 🎥 Watch Full Tutorial on YouTube </a> </p>
+📌 About The Project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This project demonstrates how to build a desktop application using Laravel with NativePHP.
 
-## Laravel Sponsors
+The application allows users to:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Manage daily tasks
 
-### Premium Partners
+Track task progress
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Store tasks locally
 
-## Contributing
+Run Laravel as a desktop application
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This project is ideal for developers who want to learn:
 
-## Code of Conduct
+Laravel Desktop Apps
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+NativePHP integration
 
-## Security Vulnerabilities
+Task management systems
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+✨ Features
 
-## License
+✔ Create Tasks
+✔ Update Tasks
+✔ Delete Tasks
+✔ Track Task Status
+✔ Desktop Application using NativePHP
+✔ Laravel Backend
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🛠 Tech Stack
+
+Laravel
+
+NativePHP
+
+Vue.js / Blade
+
+SQLite / MySQL
+
+Node.js
+
+Vite
+
+📸 Application Screenshots
+
+(You can add screenshots here)
+
+Example:
+
+/screenshots/dashboard.png
+/screenshots/tasks.png
+![Dashboard](screenshots/dashboard.png)
+![Tasks](screenshots/tasks.png)
+🚀 Installation Guide
+
+Follow the steps below to run the project locally.
+
+1️⃣ Clone the Repository
+git clone https://github.com/yourusername/task-tracker-nativephp.git
+cd task-tracker-nativephp
+2️⃣ Install PHP Dependencies
+composer install
+3️⃣ Install Node Dependencies
+npm install
+4️⃣ Build Frontend Assets
+npm run build
+5️⃣ Create Environment File
+cp .env.example .env
+6️⃣ Generate Application Key
+php artisan key:generate
+7️⃣ Configure Database
+
+Update database credentials inside .env
+
+Example:
+
+DB_DATABASE=task_tracker
+DB_USERNAME=root
+DB_PASSWORD=
+8️⃣ Run Database Migrations
+php artisan migrate
+9️⃣ Run the Desktop Application
+php artisan native:run
+
+Your NativePHP Desktop Application will start.
+
+🎥 Video Tutorial
+
+Watch the complete step-by-step tutorial:
+
+👉 https://www.youtube.com/watch?v=G9BM1q5Jl50
+
+🎓 Learn More Laravel & Vue.js
+
+Follow my YouTube channels for more tutorials.
+
+English Channel
+
+https://www.youtube.com/@LaravelLover
+
+Urdu Channel
+
+https://www.youtube.com/@hadayatniazi
+
+📚 My Laravel Courses
+Create API in Laravel
+
+https://www.youtube.com/watch?v=0h-unkoowZ4&list=PLDc9bt_00KcKrWYI1tULOFlYtnwnt8Hg-
+
+Multi Language Content in Laravel
+
+https://www.youtube.com/watch?v=9oeksj5VfJk&list=PLDc9bt_00KcIXjG4TK7_p8NOAC0Ecq4Ec
+
+Deploy Laravel App on DigitalOcean
+
+https://www.youtube.com/watch?v=Maie8_TU-oM&list=PLDc9bt_00KcIvfcUjeoaZkzcXAJpYEQ0D
+
+🤝 Contributing
+
+Contributions are welcome!
+
+If you'd like to contribute:
+
+Fork the repository
+
+Create your feature branch
+
+git checkout -b feature/new-feature
+
+Commit your changes
+
+git commit -m "Add new feature"
+
+Push to the branch
+
+git push origin feature/new-feature
+
+Open a Pull Request
+
+⭐ Support
+
+If you like this project, please consider giving it a star ⭐ on GitHub.
+It helps other developers discover the project.
+
+📬 Contact
+
+Hadayat Niazi
+
+📧 Email: hadiniazi801@gmail.com
+
+📺 YouTube: https://www.youtube.com/@hadayatniazi
