@@ -30,88 +30,125 @@
 
     <!-- Task Form Handler (inline to ensure immediate execution) -->
     <script>
-        function initTaskForm() {
+        function attachFormHandler() {
             const taskForm = document.getElementById('taskForm');
-
             if (!taskForm) return;
 
-            taskForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+            // Remove any existing listeners first
+            const newForm = taskForm.cloneNode(true);
+            taskForm.parentNode.replaceChild(newForm, taskForm);
 
-                const formData = new FormData(this);
-                const submitBtn = taskForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
+            // Attach fresh listener
+            document.getElementById('taskForm').addEventListener('submit', handleFormSubmit);
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+            // Immediately disable to prevent double clicks
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating...';
+
+            try {
+                // Get form values
+                const title = document.getElementById('taskTitle').value.trim();
+                const description = document.getElementById('taskDescription').value.trim();
+                const status = document.getElementById('taskStatus').value;
+                const priority = document.getElementById('taskPriority').value;
+                const due_date = document.getElementById('taskDueDate').value;
                 const csrfToken = document.querySelector('input[name="_token"]').value;
 
-                // Disable submit button
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Creating...';
-
-                try {
-                    const response = await fetch('/tasks', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json',
-                        },
-                        body: formData
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        showAlert('Success', data.message, 'success');
-                        taskForm.reset();
-                    } else {
-                        let errorMessage = data.message || 'An error occurred while creating the task.';
-
-                        if (data.errors) {
-                            const errorList = Object.values(data.errors).flat().join(', ');
-                            errorMessage = errorList;
-                        }
-
-                        showAlert('Error', errorMessage, 'danger');
-                    }
-                } catch (error) {
-                    showAlert('Error', error.message || 'An error occurred', 'danger');
-                } finally {
+                // Validation
+                if (!title) {
+                    showAlert('Error', 'Title is required', 'danger');
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
+                    return;
                 }
-            });
+
+                if (!status) {
+                    showAlert('Error', 'Status is required', 'danger');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    return;
+                }
+
+                if (!priority) {
+                    showAlert('Error', 'Priority is required', 'danger');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    return;
+                }
+
+                // Send request
+                const response = await fetch('/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        status,
+                        priority,
+                        due_date
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('Success', data.message, 'success');
+                    this.reset();
+                } else {
+                    let errorMessage = data.message || 'An error occurred';
+                    if (data.errors) {
+                        errorMessage = Object.values(data.errors).flat().join(', ');
+                    }
+                    showAlert('Error', errorMessage, 'danger');
+                }
+            } catch (error) {
+                showAlert('Error', error.message || 'Network error occurred', 'danger');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
         }
 
         function showAlert(title, message, type) {
             const alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) return;
 
-            const alertHTML = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert" style="min-width: 320px;">
-                    <strong>${title}:</strong> ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.style.minWidth = '320px';
+            alertDiv.innerHTML = `
+                <strong>${title}:</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
 
-            const alertElement = document.createElement('div');
-            alertElement.innerHTML = alertHTML;
-            const alert = alertElement.firstElementChild;
-            alertContainer.appendChild(alert);
+            alertContainer.appendChild(alertDiv);
 
             // Auto-dismiss after 5 seconds
-            setTimeout(function() {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-
-                setTimeout(function() {
-                    alert.remove();
-                }, 150);
+            setTimeout(() => {
+                try {
+                    new bootstrap.Alert(alertDiv).close();
+                } catch (e) {
+                    alertDiv.remove();
+                }
             }, 5000);
         }
 
-        // Initialize form when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initTaskForm);
-        } else {
-            initTaskForm();
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', attachFormHandler);
+        if (document.readyState !== 'loading') {
+            attachFormHandler();
         }
     </script>
 
