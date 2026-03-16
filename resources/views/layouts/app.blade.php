@@ -30,35 +30,37 @@
 
     <!-- Task Form Handler (inline to ensure immediate execution) -->
     <script>
+        let isSubmitting = false;
+
         function attachFormHandler() {
             const taskForm = document.getElementById('taskForm');
             if (!taskForm) return;
 
-            // Remove any existing listeners first
-            const newForm = taskForm.cloneNode(true);
-            taskForm.parentNode.replaceChild(newForm, taskForm);
-
-            // Attach fresh listener
-            document.getElementById('taskForm').addEventListener('submit', handleFormSubmit);
+            // Remove before adding to prevent duplicate listeners
+            taskForm.removeEventListener('submit', handleFormSubmit);
+            taskForm.addEventListener('submit', handleFormSubmit);
         }
 
         async function handleFormSubmit(e) {
             e.preventDefault();
 
-            const submitBtn = this.querySelector('button[type="submit"]');
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const submitBtn = document.getElementById('formSubmitBtn');
             const originalText = submitBtn.textContent;
 
-            // Immediately disable to prevent double clicks
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating...';
+            submitBtn.textContent = originalText === 'Update Task' ? 'Updating...' : 'Creating...';
 
             try {
                 // Get form values
+                const taskId = document.getElementById('taskId').value;
                 const title = document.getElementById('taskTitle').value.trim();
                 const description = document.getElementById('taskDescription').value.trim();
                 const status = document.getElementById('taskStatus').value;
                 const priority = document.getElementById('taskPriority').value;
-                const due_date = document.getElementById('taskDueDate').value;
+                const due_date = document.getElementById('taskDueDate').value || null;
                 const csrfToken = document.querySelector('input[name="_token"]').value;
 
                 // Validation
@@ -66,57 +68,74 @@
                     showAlert('Error', 'Title is required', 'danger');
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalText;
+                    isSubmitting = false;
                     return;
                 }
 
-                if (!status) {
-                    showAlert('Error', 'Status is required', 'danger');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                    return;
-                }
+                // Determine if creating or updating
+                const isEdit = taskId && taskId !== '';
+                const url = isEdit ? `/tasks/${taskId}` : '/tasks';
+                const actionMsg = isEdit ? 'updated' : 'created';
 
-                if (!priority) {
-                    showAlert('Error', 'Priority is required', 'danger');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                    return;
+                const bodyData = {
+                    title,
+                    description,
+                    status,
+                    priority,
+                    due_date
+                };
+
+                // Use POST with _method spoofing for updates (NativePhP compatibility)
+                if (isEdit) {
+                    bodyData._method = 'PUT';
                 }
 
                 // Send request
-                const response = await fetch('/tasks', {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                     },
-                    body: JSON.stringify({
-                        title,
-                        description,
-                        status,
-                        priority,
-                        due_date
-                    })
+                    body: JSON.stringify(bodyData)
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    showAlert('Success', data.message, 'success');
-                    this.reset();
+                    showAlert('Success', `Task ${actionMsg} successfully!`, 'success');
+
+                    // Add or update task in list without full reload
+                    if (isEdit && window.updateTaskInList) {
+                        window.updateTaskInList(data.task);
+                    } else if (!isEdit && window.addTaskToList) {
+                        window.addTaskToList(data.task);
+                    }
+
+                    // Reset form to create mode
+                    if (window.resetFormToCreate) {
+                        window.resetFormToCreate();
+                    }
+
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    isSubmitting = false;
                 } else {
                     let errorMessage = data.message || 'An error occurred';
                     if (data.errors) {
                         errorMessage = Object.values(data.errors).flat().join(', ');
                     }
                     showAlert('Error', errorMessage, 'danger');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                    isSubmitting = false;
                 }
             } catch (error) {
                 showAlert('Error', error.message || 'Network error occurred', 'danger');
-            } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
+                isSubmitting = false;
             }
         }
 
