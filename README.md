@@ -59,7 +59,7 @@ php artisan optimize                # This is the magic — caches routes, confi
 Then rebuild frontend assets (super important for first load):
 
 ``` bash
-npm run build -- --mode=android     # or --mode=ios depending on your phone
+npm run build --mode=android     # or --mode=ios depending on your phone
 ```
 
 Now start Jump:
